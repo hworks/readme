@@ -29,8 +29,8 @@ docker images
 
 ```
 
-oudan-server_oudan-webapiのイメージが作成されていれば成功
-
+oudan-server_oudan-webapiのイメージが作成されていれば成功  
+上記の①、②の手順を実行する
 
 
 # 起動・停止
@@ -83,45 +83,48 @@ curl 'http://{サーバIP}:3030/api/search/?q=検索文字'
 ]
 
 
-
-
 ## ファイル構成
+oudan-server-prod/  
+　├ docker-compose.yml  
+　├ Dockerfile  
+　├ requirements.txt  
+　└ scripts/  
+　　　├ app.py  
+　　　├ NeuronApi.py  
+　　　├ moji.py  
+　　　├ .env  
+　　　└ logger_config.json  
+
 - docker-compose.yml, Dockerfile 環境構築用の設定ファイル
 - requirements.txt: pip install パッケージリスト
 - scripts: スクリプトファイルの格納フォルダ
     - app.py: メインモジュール
     - NeuronApi.py: NeuronApi用のクラス
     - moji.py: 形態素解析用のクラス
-    - logger_config.json: ロガー設定ファイル
     - .env: 設定ファイル
-
-oudan-server-prod/
-├ docker-compose.yml
-├ Dockerfile
-├ requirements.txt
-└  scripts/
-        ├ .env
-        ├ app.py
-        ├ moji.py
-        ├ NeuronApi.py	
-        └  logger_config.json
+    - logger_config.json: ロガー設定ファイル
 
 
 ## 動作確認
 
-docker exec -it oudan-server-prod bash
+```bash
+docker exec -it oudan-server-prod /bin/bash
 python3 -m Neuron '検索キーワード'
+```
 
-正常な場合
-Neuron検索の結果がSlackのハイパーリンクの形式で出力される。
-異常な場合
-エラー内容が出力される。
-タイムアウトが発生する。
-.evnの横断検索のURLとAPIキーが正しいか確認する。
-横断検索が動作しているか確認する。
+・正常な場合  
+　Neuron検索の結果がSlackのハイパーリンクの形式で出力される
 
-
-
-
+　例）  
+　[
+　"<https://xxxxxx.com/xxx|タイトル[情報元]",
+　"<https://xxxxxx.com/xxx|タイトル[情報元]>"
+　]
 
 
+・異常な場合  
+　エラー内容が出力される、タイムアウトが発生するなど  
+
+　確認事項  
+　・.envの横断検索のURLとAPIキーが正しいか  
+　・横断検索が動作しているか  
