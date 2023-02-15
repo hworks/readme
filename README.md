@@ -16,9 +16,21 @@ NEURON_API_KEY=xxxxxx
 docker-compose up -d
 ```
 ---
-＜DockerImageを利用して構築する場合＞
+＜Dockerイメージを利用して構築する場合＞
 
-①Dockerのイメージをインポート
+・Dockerのイメージを展開する
+```bash
+docker load < oudan-server.tar
+
+```
+　イメージが作成されたか確認する
+```bash
+docker images
+
+```
+
+oudan-server_oudan-webapiのイメージが作成されていれば成功
+
 
 
 # 起動・停止
@@ -82,3 +94,34 @@ curl 'http://{サーバIP}:3030/api/search/?q=検索文字'
     - moji.py: 形態素解析用のクラス
     - logger_config.json: ロガー設定ファイル
     - .env: 設定ファイル
+
+oudan-server-prod/
+├ docker-compose.yml
+├ Dockerfile
+├ requirements.txt
+└  scripts/
+        ├ .env
+        ├ app.py
+        ├ moji.py
+        ├ NeuronApi.py	
+        └  logger_config.json
+
+
+## 動作確認
+
+docker exec -it oudan-server-prod bash
+python3 -m Neuron '検索キーワード'
+
+正常な場合
+Neuron検索の結果がSlackのハイパーリンクの形式で出力される。
+異常な場合
+エラー内容が出力される。
+タイムアウトが発生する。
+.evnの横断検索のURLとAPIキーが正しいか確認する。
+横断検索が動作しているか確認する。
+
+
+
+
+
+
