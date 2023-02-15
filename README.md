@@ -15,6 +15,11 @@ NEURON_API_KEY=xxxxxx
 ```bash
 docker-compose up -d
 ```
+---
+＜DockerImageを利用して構築する場合＞
+
+①Dockerのイメージをインポート
+
 
 # 起動・停止
 
@@ -26,6 +31,10 @@ docker-compose up -d
 コンテナ停止
 ```bash
 docker-compose down
+```
+or（コンテナを削除しない場合）
+```bash
+docker-compose stop
 ```
 
 
